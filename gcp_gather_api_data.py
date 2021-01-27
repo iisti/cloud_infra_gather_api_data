@@ -97,6 +97,8 @@ def main():
     # Write a JSON file of the instences/nodes
     #file_ops.write_json_dump(nodes, "gcp_braintribe-anexia-vms", config.get_output_path())
 
+    file_ops.write_csv_nodes(nodes, "vms", config.get_output_path())
+
 # Example:
 # https://realpython.com/python-logging/
 def log_to_file(config: ConfParser = None, log_id: str = None):
