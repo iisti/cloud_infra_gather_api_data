@@ -138,3 +138,5 @@ logs/*
 # Don't commit config.ini as it contains test confs.
 # config_example.ini is commited.
 config.ini
+
+credentials*.json
