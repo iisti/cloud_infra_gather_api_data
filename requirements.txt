@@ -1,0 +1,6 @@
+# Documentation and shell UI
+docopt
+# For making requests to APIs
+requests
+# For Apache Libcloud to connect GCP API
+apache-libcloud
