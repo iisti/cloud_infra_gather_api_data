@@ -2,5 +2,7 @@
 docopt
 # For making requests to APIs
 requests
-# For Apache Libcloud to connect GCP API
+# For Apache Libcloud to connect cloud APIs
 apache-libcloud
+# Required by Apache Libcloud to authenticate GCP API
+cryptography

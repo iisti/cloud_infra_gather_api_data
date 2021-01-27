@@ -3,7 +3,8 @@
 # For removing whitespaces
 import re
 # For parsing configuration file
-from configparser import ConfigParser
+# Set ExtendedInterpolation, check https://docs.python.org/3/library/configparser.html
+from configparser import ConfigParser, ExtendedInterpolation
 
 # logging
 # https://stackoverflow.com/questions/13733552/logger-configuration-to-log-to-file-and-print-to-stdout
@@ -14,7 +15,7 @@ class ConfParser:
     """A class for parsing configuration files."""
 
     def __init__(self):
-        self.config = ConfigParser()
+        self.config = ConfigParser(interpolation=ExtendedInterpolation())
 
     def load_ini_conf(self, conf_file):
         """Loads a configuration file.
@@ -31,7 +32,7 @@ class ConfParser:
         """Returns the log level which should be used for logging.
         logging.LEVEL's type is int."""
 
-        log_level = self.config['Data']['log_level']
+        log_level = self.config['Common']['log_level']
         if log_level.lower() == "debug":
             return logging.DEBUG
         elif log_level.lower() == "info":
@@ -52,7 +53,7 @@ class ConfParser:
             log output path.
         """
 
-        return self.config['Data']['log_path']
+        return self.config['Common']['log_path']
     
     def print_conf(self):
         """Prints all data that was parsed from configuration file."""
@@ -90,26 +91,24 @@ class ConfParser:
             log output path.
         """
 
-        return self.config['Data']['output_path']
+        return self.config['Common']['output_path']
    
-    def get_user(self):
-        """Returns user defined in configuration file."""
+    def get_gcp_service_account_email(self):
+        """Returns service account email."""
         
-        return self.config['Data']['user']
+        return self.config['GCP']['service_account_email']
 
-    def get_access_token(self):
-        """Returns token in configuration file."""
-        
-        return self.config['Data']['access_token']
-   
-    # Needs work
-    def get_instance_url(self):
-        """Returns the URL for retrieving organisation information."""
+    def get_gcp_project_id(self):
+        """Returns GCP Project ID string."""
 
-        tmp_str = self.config['Data']['instance_url'].replace("MY_ORGANISATION",
-                self.get_organisation_name())
+        return self.config['GCP']['project_id']
 
-        return tmp_str
+    def get_gcp_zone(self):
+        """Returns GCP zone."""
 
-        return self.config['Data']['organisation_name']
-    
+        return self.config['GCP']['zone']
+
+    def get_gcp_credential_file(self):
+        """Returns path to credential file."""
+
+        return self.config['GCP']['credentials_file']

@@ -133,11 +133,13 @@ virtualenv/
 *.swp
 
 output/*
+!output/.gitignore
 logs/*
+!logs/.gitignore
 
 # Don't commit config.ini as it contains test confs.
 # config_example.ini is commited.
 config.ini
 
-credentials/*.json
-credentials/*.p12
+credentials/*
+!credentials/.gitignore

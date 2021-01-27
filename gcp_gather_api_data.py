@@ -6,9 +6,9 @@ This is a program for gathering data from GCP API for IT adminstration purposes.
 
 
 Usage:
-    gcP-gather_api_data.py (-c <FILE> | --config <FILE>)
-    gcP-gather_api_data.py (-h | --help)
-    gcP-gather_api_data.py --version
+    gcp_gather_api_data.py (-c <FILE> | --config <FILE>)
+    gcp_gather_api_data.py (-h | --help)
+    gcp_gather_api_data.py --version
 
 Options:
     -h --help   Show this screen.
@@ -48,6 +48,19 @@ import requests
 # For parsing configurations
 from modules.conf_parser import ConfParser
 
+# Apache Libcloud, for retrieving stuff from cloud providors.
+from libcloud.compute.types import Provider
+from libcloud.compute.providers import get_driver
+
+def retrieve_node_list(conf: ConfParser = None, driver: Provider = None):
+    if conf == None or not isinstance(conf, ConfParser):
+        logging.error("Func: {} no conf given.".format(inspect.stack()[0][3]))
+        return
+    
+    if driver == None or not isinstance(driver, Provider):
+        logging.error("Func: {} no Libcloud driver given.".format(inspect.stack()[0][3]))
+        return
+    
 
 
 
@@ -62,7 +75,27 @@ def main():
 
     # Print loaded configuration
     logging.info("Loaded configuration:\n" + config.get_conf_str())
+
+    gcp_access_id = config.get_gcp_service_account_email()
+    # File can be either JSON or P12 format
+    gcp_credential_file = config.get_gcp_credential_file()
+    gcp_project_id = config.get_gcp_project_id()
+    gcp_zone = config.get_gcp_zone()
+   
+    gcp_driver = get_driver(Provider.GCE)
+
+    drivers = [gcp_driver(gcp_access_id,
+            gcp_credential_file,
+            project=gcp_project_id,
+            datacenter=gcp_zone)]
+
+    nodes = []
+    for driver in drivers:
+        nodes += driver.list_nodes()
     
+    print(nodes)
+    # Write a JSON file of the instences/nodes
+    #file_ops.write_json_dump(nodes, "gcp_braintribe-anexia-vms", config.get_output_path())
 
 # Example:
 # https://realpython.com/python-logging/
