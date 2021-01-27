@@ -139,4 +139,5 @@ logs/*
 # config_example.ini is commited.
 config.ini
 
-credentials*.json
+credentials/*.json
+credentials/*.p12
