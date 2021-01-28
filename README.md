@@ -1,5 +1,5 @@
-# gcp_gather_api_data
-A project for gathering relevant data from GCP API about VMs/etc in GCP.
+# Cloud Infrastructure Gather API Data
+A project for gathering relevant data from cloud providers API about VMs/etc in GCP.
 
 ## Development instructions
 ### On Windows 10
