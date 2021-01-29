@@ -6,9 +6,9 @@ This is a program for gathering data from GCP API for IT adminstration purposes.
 
 
 Usage:
-    gcp_gather_api_data.py (-c <FILE> | --config <FILE>)
-    gcp_gather_api_data.py (-h | --help)
-    gcp_gather_api_data.py --version
+    gather_api_data.py (-c <FILE> | --config <FILE>)
+    gather_api_data.py (-h | --help)
+    gather_api_data.py --version
 
 Options:
     -h --help   Show this screen.
@@ -52,35 +52,19 @@ from modules.conf_parser import ConfParser
 from libcloud.compute.types import Provider
 from libcloud.compute.providers import get_driver
 
-def retrieve_node_list(conf: ConfParser = None, driver: Provider = None):
+# For checking instance type of GCENodeDriver
+#from libcloud.compute.drivers.gce import GCENodeDriver
+
+def retrieve_node_list(conf: ConfParser = None):
     if conf == None or not isinstance(conf, ConfParser):
         logging.error("Func: {} no conf given.".format(inspect.stack()[0][3]))
         return
     
-    if driver == None or not isinstance(driver, Provider):
-        logging.error("Func: {} no Libcloud driver given.".format(inspect.stack()[0][3]))
-        return
-    
-
-
-
-
-def main():
-    arguments = docopt(__doc__, version='GCP Gather API Data 0.1')
-    config = ConfParser()
-    config.load_ini_conf(arguments["--config"])
-
-    # Create log file
-    log_to_file(config, "gcp_gather_api_data")
-
-    # Print loaded configuration
-    logging.info("Loaded configuration:\n" + config.get_conf_str())
-
-    gcp_access_id = config.get_gcp_service_account_email()
+    gcp_access_id = conf.get_gcp_service_account_email()
     # File can be either JSON or P12 format
-    gcp_credential_file = config.get_gcp_credential_file()
-    gcp_project_id = config.get_gcp_project_id()
-    gcp_zone = config.get_gcp_zone()
+    gcp_credential_file = conf.get_gcp_credential_file()
+    gcp_project_id = conf.get_gcp_project_id()
+    gcp_zone = conf.get_gcp_zone()
    
     gcp_driver = get_driver(Provider.GCE)
 
@@ -92,12 +76,30 @@ def main():
     nodes = []
     for driver in drivers:
         nodes += driver.list_nodes()
-    
-    print(nodes)
+
+    return nodes
+
+def main():
+    arguments = docopt(__doc__, version='GCP Gather API Data 0.1')
+    config = ConfParser()
+    config.load_ini_conf(arguments["--config"])
+
+    # Create log file
+    log_to_file(config, "gather_api_data")
+
+    # Print loaded configuration
+    logging.info("Loaded configuration:\n" + config.get_conf_str())
+
+    config.get_gcp_access_list()
+
+
+    #nodes = retrieve_node_list(config)
+    #file_ops.write_csv_nodes(nodes, "vms", config.get_output_path())
+   
+
+    # Not needed
     # Write a JSON file of the instences/nodes
     #file_ops.write_json_dump(nodes, "gcp_braintribe-anexia-vms", config.get_output_path())
-
-    file_ops.write_csv_nodes(nodes, "vms", config.get_output_path())
 
 # Example:
 # https://realpython.com/python-logging/

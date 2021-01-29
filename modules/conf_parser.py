@@ -112,3 +112,20 @@ class ConfParser:
         """Returns path to credential file."""
 
         return self.config['GCP']['credentials_file']
+
+    def get_gcp_access_list(self):
+        """Returns JSON of access information to GCP.
+        
+        Returns
+        -------
+        list
+            Nested list with GCP access information.
+        """
+        
+        access_str = self.config['GCP']['project_access_list']
+
+        # Creating a nested list which items are lists with 4 values:
+        # (project, zone, service account, credentials path)
+        access_list = [item.split(',') for item in access_str.strip().split('\n')]
+
+        return access_list
