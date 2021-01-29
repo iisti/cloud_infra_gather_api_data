@@ -40,12 +40,12 @@ A project for gathering relevant data from cloud providers API about VMs/etc in 
     1. GCP Projcet -> IAM & Admin -> Service Accounts -> Create service account
     1. Input name.
     1. Step: Grant this service account access to project (optional)
-     * User role "Basic: viewer" = Read access to all resources.
+       * User role "Basic: viewer" = Read access to all resources.
     1. Step: Grant users access to this service account (optional)
-     * This is not needed.
+       * This is not needed.
     1. Select the new service account and create new key in JSON format.
     1. Copy/move the credential JSON to this project root and rename it with prefix "credential_", so
       that the credentials will not be uploaded to GitHub by accident.
     1. Required information from GCP:
-      * Service account ID == api_key for Libcloud
-      * Project ID, this string can be found from GCP Project Dashboard.
+       * Service account ID == api_key for Libcloud
+       * Project ID, this string can be found from GCP Project Dashboard.
