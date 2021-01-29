@@ -33,19 +33,19 @@ A project for gathering relevant data from cloud providers API about VMs/etc in 
 
         # Remember to activate virtualenv before
         pip3 install -r requirements.txt
-
-1. Create service account for connecting to GCP API. Follow instructions from:
-  * One can do this also with "Installed Application".
-  * Source: https://libcloud.readthedocs.io/en/stable/compute/drivers/gce.htm
-  1. GCP Projcet -> IAM & Admin -> Service Accounts -> Create service account
-  1. Input name.
-  1. Step: Grant this service account access to project (optional)
-    * User role "Basic: viewer" = Read access to all resources.
-  1. Step: Grant users access to this service account (optional)
-    * This is not needed.
-  1. Select the new service account and create new key in JSON format.
-  1. Copy/move the credential JSON to this project root and rename it with prefix "credential_", so
-     that the credentials will not be uploaded to GitHub by accident.
-  1. Required information from GCP:
-     * Service account ID == api_key for Libcloud
-     * Project ID, this string can be found from GCP Project Dashboard.
+        
+1. Create service account for connecting to GCP API.
+    * One can do this also with "Installed Application".
+    * Source: https://libcloud.readthedocs.io/en/stable/compute/drivers/gce.htm
+    1. GCP Projcet -> IAM & Admin -> Service Accounts -> Create service account
+    1. Input name.
+    1. Step: Grant this service account access to project (optional)
+     * User role "Basic: viewer" = Read access to all resources.
+    1. Step: Grant users access to this service account (optional)
+     * This is not needed.
+    1. Select the new service account and create new key in JSON format.
+    1. Copy/move the credential JSON to this project root and rename it with prefix "credential_", so
+      that the credentials will not be uploaded to GitHub by accident.
+    1. Required information from GCP:
+      * Service account ID == api_key for Libcloud
+      * Project ID, this string can be found from GCP Project Dashboard.
