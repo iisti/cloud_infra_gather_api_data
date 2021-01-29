@@ -79,6 +79,38 @@ def retrieve_node_list(conf: ConfParser = None):
 
     return nodes
 
+def retrieve_node_list2(conf: ConfParser = None, access_list: list = None):
+    if conf == None or not isinstance(conf, ConfParser):
+        logging.error("Func: {} no conf given.".format(inspect.stack()[0][3]))
+        return
+    
+    gcp_access_id = conf.get_gcp_service_account_email()
+    # File can be either JSON or P12 format
+    gcp_credential_file = conf.get_gcp_credential_file()
+    gcp_project_id = conf.get_gcp_project_id()
+    gcp_zone = conf.get_gcp_zone()
+   
+    gcp_driver = get_driver(Provider.GCE)
+
+    drivers = list()
+
+    # Order of items in the nested acccess_list:
+    # [[project, zone, service account, credential file], [etc...]]
+    for access in access_list:
+        # driver needs args in order access_id, credential_file, project, datacenter/zone
+        drivers.append(gcp_driver(access[2], access[3], project=access[0], datacenter=access[1]))
+
+    #drivers = [gcp_driver(gcp_access_id,
+    #        gcp_credential_file,
+    #        project=gcp_project_id,
+    #        datacenter=gcp_zone)]
+
+    nodes = []
+    for driver in drivers:
+        nodes += driver.list_nodes()
+
+    return nodes
+
 def main():
     arguments = docopt(__doc__, version='GCP Gather API Data 0.1')
     config = ConfParser()
@@ -90,11 +122,15 @@ def main():
     # Print loaded configuration
     logging.info("Loaded configuration:\n" + config.get_conf_str())
 
-    config.get_gcp_access_list()
+    access_list = config.get_gcp_access_list()
 
+    #for items in access_list:
+    #    for item in items:
+    #        print(item, end = ' ')
 
     #nodes = retrieve_node_list(config)
-    #file_ops.write_csv_nodes(nodes, "vms", config.get_output_path())
+    nodes = retrieve_node_list2(config, access_list)
+    file_ops.write_csv_nodes(nodes, "vms", config.get_output_path())
    
 
     # Not needed
