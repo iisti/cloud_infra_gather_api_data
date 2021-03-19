@@ -1,5 +1,6 @@
 # Cloud Infrastructure Gather API Data
-A project for gathering relevant data from cloud providers API about VMs/etc in GCP.
+* A project for gathering relevant data from cloud providers API about VMs/etc.
+  * Relevant data means: what is running where and IPs/etc.
 
 ## Development instructions
 ### On Windows 10
@@ -33,7 +34,8 @@ A project for gathering relevant data from cloud providers API about VMs/etc in 
 
         # Remember to activate virtualenv before
         pip3 install -r requirements.txt
-        
+
+#### GCP (Google Cloud Providor) instructions
 1. Create service account for connecting to GCP API.
     * One can do this also with "Installed Application".
     * Source: https://libcloud.readthedocs.io/en/stable/compute/drivers/gce.htm
