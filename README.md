@@ -22,6 +22,7 @@
 1. Activate virtual environment
 
        source gcp_gather_api_data/virtualenv/bin/activate
+       # If you get error "virtualenv: command not found", relogin into shell and try again.
 1. One can check which virtualenv is in use by:
 
        echo $VIRTUAL_ENV
