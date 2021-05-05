@@ -55,40 +55,40 @@ from libcloud.compute.providers import get_driver
 # For checking instance type of GCENodeDriver
 #from libcloud.compute.drivers.gce import GCENodeDriver
 
-def retrieve_node_list(conf: ConfParser = None):
-    if conf == None or not isinstance(conf, ConfParser):
-        logging.error("Func: {} no conf given.".format(inspect.stack()[0][3]))
-        return
-    
-    gcp_access_id = conf.get_gcp_service_account_email()
-    # File can be either JSON or P12 format
-    gcp_credential_file = conf.get_gcp_credential_file()
-    gcp_project_id = conf.get_gcp_project_id()
-    gcp_zone = conf.get_gcp_zone()
-   
-    gcp_driver = get_driver(Provider.GCE)
-
-    drivers = [gcp_driver(gcp_access_id,
-            gcp_credential_file,
-            project=gcp_project_id,
-            datacenter=gcp_zone)]
-
-    nodes = []
-    for driver in drivers:
-        nodes += driver.list_nodes()
-
-    return nodes
+#def retrieve_node_list(conf: ConfParser = None):
+#    if conf == None or not isinstance(conf, ConfParser):
+#        logging.error("Func: {} no conf given.".format(inspect.stack()[0][3]))
+#        return
+#    
+#    gcp_access_id = conf.get_gcp_service_account_email()
+#    # File can be either JSON or P12 format
+#    gcp_credential_file = conf.get_gcp_credential_file()
+#    gcp_project_id = conf.get_gcp_project_id()
+#    gcp_zone = conf.get_gcp_zone()
+#   
+#    gcp_driver = get_driver(Provider.GCE)
+#
+#    drivers = [gcp_driver(gcp_access_id,
+#            gcp_credential_file,
+#            project=gcp_project_id,
+#            datacenter=gcp_zone)]
+#
+#    nodes = []
+#    for driver in drivers:
+#        nodes += driver.list_nodes()
+#
+#    return nodes
 
 def retrieve_node_list2(conf: ConfParser = None, access_list: list = None):
     if conf == None or not isinstance(conf, ConfParser):
         logging.error("Func: {} no conf given.".format(inspect.stack()[0][3]))
         return
     
-    gcp_access_id = conf.get_gcp_service_account_email()
-    # File can be either JSON or P12 format
-    gcp_credential_file = conf.get_gcp_credential_file()
-    gcp_project_id = conf.get_gcp_project_id()
-    gcp_zone = conf.get_gcp_zone()
+    #gcp_access_id = conf.get_gcp_service_account_email()
+    ### File can be either JSON or P12 format
+    #gcp_credential_file = conf.get_gcp_credential_file()
+    #gcp_project_id = conf.get_gcp_project_id()
+    #gcp_zone = conf.get_gcp_zone()
    
     gcp_driver = get_driver(Provider.GCE)
 
