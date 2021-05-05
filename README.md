@@ -9,7 +9,7 @@
 ### Installing Python3 and virtualenv on Debian WSL
 1. Clone the repository
 
-       git clone https://github.com/iisti/gcp_gather_api_data.git
+       git clone https://github.com/iisti/cloud_infra_gather_api_data.git
 1. Install Python3 and pip3
 
        sudo apt-get install python3 python3-pip
@@ -18,15 +18,15 @@
        pip3 install virtualenv
 1. Create virtual environment
 
-       virtualenv gcp_gather_api_data/virtualenv
+       virtualenv cloud_infra_gather_api_data/virtualenv
 1. Activate virtual environment
 
-       source gcp_gather_api_data/virtualenv/bin/activate
+       source cloud_infra_gather_api_data/virtualenv/bin/activate
        # If you get error "virtualenv: command not found", relogin into shell and try again.
 1. One can check which virtualenv is in use by:
 
        echo $VIRTUAL_ENV
-       /home/iisti/scripts/gcp_gather_api_data/virtualenv
+       /home/iisti/scripts/cloud_infra_gather_api_data/virtualenv
 1. Deactivate (just to know how it's done)
 
        deactivate
