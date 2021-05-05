@@ -52,6 +52,10 @@ from modules.conf_parser import ConfParser
 from libcloud.compute.types import Provider
 from libcloud.compute.providers import get_driver
 
+# For retriving path where the gather_api_data.py resides, so that the files
+# can be written relatively to it.
+import os
+
 # For checking instance type of GCENodeDriver
 #from libcloud.compute.drivers.gce import GCENodeDriver
 
@@ -94,11 +98,13 @@ def retrieve_node_list2(conf: ConfParser = None, access_list: list = None):
 
     drivers = list()
 
+    base_dir = os.path.dirname(os.path.realpath(__file__)) + "/"
+    
     # Order of items in the nested acccess_list:
     # [[project, zone, service account, credential file], [etc...]]
     for access in access_list:
         # driver needs args in order access_id, credential_file, project, datacenter/zone
-        drivers.append(gcp_driver(access[2], access[3], project=access[0], datacenter=access[1]))
+        drivers.append(gcp_driver(access[2], base_dir + access[3], project=access[0], datacenter=access[1]))
 
     #drivers = [gcp_driver(gcp_access_id,
     #        gcp_credential_file,
@@ -130,7 +136,10 @@ def main():
 
     #nodes = retrieve_node_list(config)
     nodes = retrieve_node_list2(config, access_list)
-    file_ops.write_csv_nodes(nodes, "vms", config.get_output_path())
+    
+    base_dir = os.path.dirname(os.path.realpath(__file__)) + "/"
+    
+    file_ops.write_csv_nodes(nodes, "vms", base_dir + config.get_output_path())
    
 
     # Not needed
@@ -140,7 +149,8 @@ def main():
 # Example:
 # https://realpython.com/python-logging/
 def log_to_file(config: ConfParser = None, log_id: str = None):
-    log_path = config.get_log_path()
+    base_dir = os.path.dirname(os.path.realpath(__file__)) + "/"
+    log_path = base_dir + config.get_log_path()
     log_name = log_path + log_id + "_" + \
             datetime.now().strftime("%Y%m%d-%H%M%S") + ".log"
 
